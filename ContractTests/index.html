@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Storage</h1>
+    <p>Current value: <span id="value">?</span></p>
+    <input type="number" id="number" placeholder="Set value" />
+    <button onclick="setValue()">Set value</button>
+
+    <span>User <span id="username"> </span> <span id="age"> </span></span>
+    <button onclick="getUser()">Get User</button>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <h1>Product</h1>
+
+    <input type="text" id="name" placeholder="name" />
+    <input type="text" id="description" placeholder="description" />
+    <input type="number" id="price" placeholder="price" />
+    <input type="text" id="picture" placeholder="picture" />
+    <button onclick="setProduct()">Set Product</button>
+
+    <table id="data">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Creator</th>
+        <th>Time</th>
+        <th>image</th>
+      </tr>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.15.0/ethers.umd.min.js"></script>
+    <script src="./scripts/contract_abi.json"></script>
+    <script src="./scripts/product_abi.json"></script>
+    <script>
+      console.log(product_abi);
+      const contractAddress = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
+      //ABI
+
+      const c_abi = ["function get_value()public view returns(uint)"];
+
+      const setValue = async () => {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = await provider.getSigner();
+
+        const contract = new ethers.Contract(contractAddress, abi, signer);
+        const value = document.getElementById("number").value;
+        const tx = await contract.set_value(value);
+        await tx.wait();
+        console.log(tx);
+        getValue();
+      };
+
+      const getValue = async () => {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const contract = new ethers.Contract(contractAddress, c_abi, provider);
+        const value = await contract.get_value();
+
+        document.getElementById("value").textContent = `${value}`;
+      };
+      getValue();
+
+      const getUser = async () => {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const contract = new ethers.Contract(contractAddress, abi, provider);
+        const user = await contract.getUser();
+        console.log(user);
+        document.getElementById("name").textContent = user.name;
+        document.getElementById("age").textContent = user.age;
+      };
+
+      const productContractAddress =
+        "0x610178dA211FEF7D417bC0e6FeD39F05609AD788";
+
+      //product_abi
+
+      const setProduct = async () => {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+
+        const signer = await provider.getSigner();
+        console.log(signer);
+
+        const product = {
+          name: document.getElementById("name").value,
+          description: document.getElementById("description").value,
+          price: document.getElementById("price").value,
+          creator: signer.address,
+          time: Date.now(),
+          pitureUrl: document.getElementById("picture").value,
+          //"https://static.vecteezy.com/vite/assets/photo-masthead-375-BoK_p8LG.webp",
+        };
+        const contract = new ethers.Contract(
+          productContractAddress,
+          product_abi,
+          signer
+        );
+        console.log(product);
+        const tx = await contract.setProduct(product);
+        await tx.wait();
+        console.log(tx);
+      };
+
+      const getProducts = async () => {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const contract = new ethers.Contract(
+          productContractAddress,
+          product_abi,
+          provider
+        );
+        const value = await contract.getProducts();
+        console.log(value[0]);
+
+        value.forEach((p) => {
+          const row = document.createElement("tr");
+          const name = document.createElement("td");
+          const description = document.createElement("td");
+          const price = document.createElement("td");
+          const creator = document.createElement("td");
+          const time = document.createElement("td");
+          const picture = document.createElement("img");
+
+          name.textContent = p.name;
+          description.textContent = p.description;
+          price.textContent = p.price;
+          creator.textContent = p.creator;
+          time.textContent = p.time;
+          picture.textContent = p.pitureUrl;
+
+          row.appendChild(name);
+          row.appendChild(description);
+          row.appendChild(price);
+          row.appendChild(creator);
+          row.appendChild(time);
+          row.appendChild(picture);
+          picture.setAttribute("src", p.pitureUrl);
+          picture.setAttribute("style", "width: 50px");
+
+          document.getElementById("data").appendChild(row);
+        });
+      };
+      getProducts();
+    </script>
+  </body>
+</html>

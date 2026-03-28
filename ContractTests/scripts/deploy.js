@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 
 (
     async () => {
-        const factory = await ethers.getContractFactory("PaymentContract");
+        const factory = await ethers.getContractFactory("ProductContract");
         const payments = await factory.deploy();
         await payments.waitForDeployment();
         console.log("Contract address: ", await payments.getAddress())
