@@ -1,0 +1,130 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "ammount",
+						"type": "uint256"
+					}
+				],
+				"name": "EmergencyCall",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "addEth",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "organizationAddress",
+						"type": "address"
+					}
+				],
+				"name": "addOrganization",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "victim",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ammount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					}
+				],
+				"name": "raiseEmergency",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Emergency.sol": "Emergency"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Emergency.sol": {
+			"keccak256": "0x4d72fa9f2af10cf6b17023c6def385d6eca53013de5ec0b478d751ea7a25cb55",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b30217302a801233d418f03b7005ad9edc622c7e7dc21ea48d405955bb27ed5c",
+				"dweb:/ipfs/QmPKJwAdA64Z3oWmgBMPugMFCS9jnLazc2cA7JJzej6V3R"
+			]
+		}
+	},
+	"version": 1
+}
